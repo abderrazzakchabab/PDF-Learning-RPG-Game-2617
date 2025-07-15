@@ -1,11 +1,14 @@
-import React from 'react';
-import { motion } from 'framer-motion';
+import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import * as FiIcons from 'react-icons/fi';
 import SafeIcon from '../common/SafeIcon';
+import PhysicsGuide from './PhysicsGuide';
 
 const { FiPlay, FiBook, FiSettings, FiZap } = FiIcons;
 
 function GameMenu({ onStartGame }) {
+  const [showPhysicsGuide, setShowPhysicsGuide] = useState(false);
+
   return (
     <div className="min-h-screen flex items-center justify-center p-8">
       <motion.div
@@ -22,16 +25,11 @@ function GameMenu({ onStartGame }) {
           className="mb-12"
         >
           <h1 className="text-6xl font-bold text-white mb-4">
-            Einstein's
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-orange-500">
-              {' '}Relativity
-            </span>
+            Einstein's <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-orange-500"> {' '}Relativity </span>
           </h1>
           <h2 className="text-3xl text-purple-200 mb-6">RPG Adventure</h2>
           <p className="text-xl text-gray-300 max-w-2xl mx-auto">
-            Journey through the revolutionary world of special relativity. 
-            Learn physics concepts by solving puzzles, conducting experiments, 
-            and discovering the secrets of space and time.
+            Journey through the revolutionary world of special relativity. Learn physics concepts by solving puzzles, conducting experiments, and discovering the secrets of space and time.
           </p>
         </motion.div>
 
@@ -43,7 +41,7 @@ function GameMenu({ onStartGame }) {
           className="mb-12"
         >
           <div className="text-4xl text-yellow-300 font-mono mb-4">
-            E = mc²
+            E=mc²
           </div>
           <div className="text-lg text-purple-200">
             "The most beautiful thing we can experience is the mysterious"
@@ -58,7 +56,7 @@ function GameMenu({ onStartGame }) {
           className="space-y-4"
         >
           <motion.button
-            whileHover={{ scale: 1.05, boxShadow: "0 10px 30px rgba(139, 92, 246, 0.3)" }}
+            whileHover={{ scale: 1.05, boxShadow: "0 10px 30px rgba(139,92,246,0.3)" }}
             whileTap={{ scale: 0.95 }}
             onClick={onStartGame}
             className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-bold py-4 px-8 rounded-lg text-xl flex items-center justify-center gap-3 w-full max-w-md mx-auto transition-all duration-300"
@@ -70,6 +68,7 @@ function GameMenu({ onStartGame }) {
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
+            onClick={() => setShowPhysicsGuide(true)}
             className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-bold py-3 px-8 rounded-lg text-lg flex items-center justify-center gap-3 w-full max-w-md mx-auto transition-all duration-300"
           >
             <SafeIcon icon={FiBook} className="text-xl" />
@@ -110,6 +109,13 @@ function GameMenu({ onStartGame }) {
           ))}
         </motion.div>
       </motion.div>
+
+      {/* Physics Guide Modal */}
+      <AnimatePresence>
+        {showPhysicsGuide && (
+          <PhysicsGuide onClose={() => setShowPhysicsGuide(false)} />
+        )}
+      </AnimatePresence>
     </div>
   );
 }
